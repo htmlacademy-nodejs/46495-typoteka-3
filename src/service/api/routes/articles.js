@@ -15,13 +15,13 @@ module.exports = (app, articlesService) => {
   route.post(`/`, articleValidator, (req, res) => {
     const article = articlesService.create(req.body);
     return res.status(HTTP_CODES.SUCCESS).json(article);
-  })
+  });
 
   route.put(`/:articleId`, articleExists(articlesService), articleValidator, (req, res) => {
     const {articleId} = req.params;
     const article = articlesService.edit(articleId, req.body);
     return res.status(HTTP_CODES.SUCCESS).json(article);
-  })
+  });
 
   route.get(`/:articleId`, articleExists(articlesService), (req, res) => {
     const {article} = res.locals;

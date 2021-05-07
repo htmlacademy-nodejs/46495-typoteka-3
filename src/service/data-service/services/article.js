@@ -21,7 +21,7 @@ class ArticleService {
       title,
       announce,
       fullText,
-      image: image || '',
+      image: image || ``,
       createdDate,
       category,
       comments: []
@@ -35,7 +35,7 @@ class ArticleService {
     this._articles.forEach((item) => {
       if (item.id === articleId) {
         item.title = title;
-        item.image = image || '';
+        item.image = image || ``;
         item.createdDate = createdDate;
         item.category = category;
         item.announce = announce;
