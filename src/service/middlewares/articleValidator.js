@@ -3,8 +3,12 @@
 const {HTTP_CODES} = require(`../../constants`);
 
 module.exports = (req, res, next) => {
-  const {title, createdDate, category, announce, fullText} = req.body;
+  const {title, createdDate, category, announce, fullText, image} = req.body;
   const errorMessages = [];
+
+  if (!image) {
+    errorMessages.push(`image is required`);
+  }
 
   if (!title) {
     errorMessages.push(`title is required`);

@@ -21,7 +21,7 @@ class ArticleService {
       title,
       announce,
       fullText,
-      image: image || ``,
+      image,
       createdDate,
       category,
       comments: []
@@ -35,7 +35,7 @@ class ArticleService {
     this._articles.forEach((item) => {
       if (item.id === articleId) {
         item.title = title;
-        item.image = image || ``;
+        item.image = image;
         item.createdDate = createdDate;
         item.category = category;
         item.announce = announce;
@@ -47,7 +47,9 @@ class ArticleService {
   }
 
   delete(articleId) {
+    const articleToDelete = this._articles.find((item) => item.id === articleId);
     this._articles = this._articles.filter((item) => item.id !== articleId);
+    return articleToDelete;
   }
 
   getComments(articleId) {
@@ -56,11 +58,16 @@ class ArticleService {
   }
 
   deleteComment(articleId, commentId) {
+    let commentToDelete;
+
     this._articles.forEach((item) => {
       if (item.id === articleId) {
+        commentToDelete = item.comments.find((comment) => comment.id === commentId);
         item.comments = item.comments.filter((comment) => comment.id !== commentId);
       }
     });
+
+    return commentToDelete;
   }
 
   createComment(articleId, {text}) {

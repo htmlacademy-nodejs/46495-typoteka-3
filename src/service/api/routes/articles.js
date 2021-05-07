@@ -14,7 +14,7 @@ module.exports = (app, articlesService) => {
 
   route.post(`/`, articleValidator, (req, res) => {
     const article = articlesService.create(req.body);
-    return res.status(HTTP_CODES.SUCCESS).json(article);
+    return res.status(HTTP_CODES.CREATED).json(article);
   });
 
   route.put(`/:articleId`, articleExists(articlesService), articleValidator, (req, res) => {
@@ -30,8 +30,8 @@ module.exports = (app, articlesService) => {
 
   route.delete(`/:articleId`, articleExists(articlesService), (req, res) => {
     const {articleId} = req.params;
-    articlesService.delete(articleId);
-    return res.status(HTTP_CODES.SUCCESS).json({success: `Article ${articleId} was deleted`});
+    const deletedArticle = articlesService.delete(articleId);
+    return res.status(HTTP_CODES.SUCCESS).json(deletedArticle);
   });
 
   route.get(`/:articleId/comments`, articleExists(articlesService), (req, res) => {
@@ -42,8 +42,16 @@ module.exports = (app, articlesService) => {
 
   route.delete(`/:articleId/comments/:commentId`, articleExists(articlesService), (req, res) => {
     const {articleId, commentId} = req.params;
-    articlesService.deleteComment(articleId, commentId);
-    return res.status(HTTP_CODES.SUCCESS).json({success: `Comment ${commentId} was deleted`});
+    const deletedComment = articlesService.deleteComment(articleId, commentId);
+
+    if (!deletedComment) {
+      return res.status(HTTP_CODES.NOT_FOUND).json({
+        code: HTTP_CODES.NOT_FOUND,
+        errorMessages: [`Comment with id "${commentId}" not found`]
+      });
+    }
+
+    return res.status(HTTP_CODES.SUCCESS).json(deletedComment);
   });
 
   route.post(`/:articleId/comments`, articleExists(articlesService), commentValidator, (req, res) => {
