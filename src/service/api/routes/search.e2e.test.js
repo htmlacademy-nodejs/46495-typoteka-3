@@ -138,7 +138,6 @@ describe(`API returns article based on search query`, () => {
   let response;
 
   beforeAll(async () => {
-
     response = await request(app)
       .get(`/search`)
       .query({
