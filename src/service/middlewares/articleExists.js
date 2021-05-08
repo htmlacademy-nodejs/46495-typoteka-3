@@ -8,7 +8,7 @@ module.exports = (service) => (req, res, next) => {
 
   if (!article) {
     return res.status(HTTP_CODES.NOT_FOUND).json({
-      code: HTTP_CODES.BAD_REQUEST,
+      code: HTTP_CODES.NOT_FOUND,
       errorMessages: [`Article with id "${articleId}" not found`]
     });
   }

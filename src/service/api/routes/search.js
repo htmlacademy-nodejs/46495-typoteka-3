@@ -17,7 +17,16 @@ module.exports = (app, searchService) => {
       });
     }
 
-    return res.status(HTTP_CODES.SUCCESS).json(searchService.search(query));
+    const articles = searchService.search(query);
+
+    if (!articles.length) {
+      return res.status(HTTP_CODES.NOT_FOUND).json({
+        code: HTTP_CODES.NOT_FOUND,
+        errorMessages: [`articles not found...`]
+      });
+    }
+
+    return res.status(HTTP_CODES.SUCCESS).json(articles);
   });
 
 };

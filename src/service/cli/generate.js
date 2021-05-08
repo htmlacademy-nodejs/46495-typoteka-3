@@ -84,7 +84,7 @@ const generate = async (count) => {
   for (let i = 0; i < count; i++) {
     out.push({
       id: nanoid(),
-      image: '',
+      image: ``,
       title: mockData.titles[getRandomNumber(0, mockData.titles.length - 1)],
       announce: stringPicker(mockData.sentences, 1, 5).join(` `),
       fullText: stringPicker(mockData.sentences, 5, mockData.sentences.length).join(` `),
